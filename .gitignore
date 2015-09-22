@@ -55,3 +55,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# PyCharm per-user files
+/.idea/workspace.xml
