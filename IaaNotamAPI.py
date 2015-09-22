@@ -1,4 +1,3 @@
-from collections import namedtuple
 import requests_cache
 
 
@@ -13,33 +12,33 @@ class Feed(object):
 
         :return: A string containing the HTML page's body.
         """
-        resp = self._sess.get(Feed._shortNotam.url, params=Feed._shortNotam.params, stream=True)
+        resp = self._sess.get(Feed._ShortNotam.url, params=Feed._ShortNotam.params, stream=True)
         resp.raise_for_status()
         return resp.text
 
-    class _shortNotam(object):
+    class _ShortNotam(object):
         url = 'http://ext.iaa.gov.il/aeroinfo/AeroInfo.aspx'
         params = {'msgType': 'Notam'}
 
-    def detailed_notam_xml(self, id):
+    def detailed_notam_xml(self, notam_id):
         """Gets the detailed NOTAM XML provided by the IAA SOAP interface.
 
-        :param id: Numerical NOTAM id, as specified within the IAA NOTAMs listing HTML source. e.g.:
-                   the number 522159 in ` <div id="divMainInfo_522159" '. Note this is NOT the ICAO
-                   NOTAM identifier.
+        :param notam_id: Numerical NOTAM id, as specified within the IAA NOTAMs listing HTML source. e.g.:
+                         the number 522159 in ` <div id="divMainInfo_522159" '. Note this is NOT the ICAO
+                         NOTAM identifier.
         :return: XML providing full details of the NOTAM, exactly as it is provided by the IAA
                  SOAP interface.
         """
-        req_body = Feed._notamDetails.body.format(notam_id=id)
-        resp = self._sess.post(Feed._notamDetails.url,
-                               params=Feed._notamDetails.params,
-                               headers=Feed._notamDetails.headers,
+        req_body = Feed._NotamDetails.body.format(notam_id=notam_id)
+        resp = self._sess.post(Feed._NotamDetails.url,
+                               params=Feed._NotamDetails.params,
+                               headers=Feed._NotamDetails.headers,
                                data=req_body,
                                stream=True)
         resp.raise_for_status()
         return resp.text
 
-    class _notamDetails(object):
+    class _NotamDetails(object):
         url = 'http://ext.iaa.gov.il/aeroinfo/AeroInfo.asmx'
         params = {'op': 'getMoreMsgInfo'}
         headers = {
