@@ -80,7 +80,7 @@ class Feed(object):
                       <soap:Body>
                           <getMoreMsgInfo xmlns='http://tempuri.org/'>
                               <msgNum>{notam_id}</msgNum>
-                              <mode>more</mode>
+                              <mode>full</mode>
                               <CurrOrHist>Current</CurrOrHist>
                           </getMoreMsgInfo>
                       </soap:Body>
